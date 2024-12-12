@@ -6,9 +6,5 @@ type SelectWrapperProps = {
 };
 
 export const SelectWrapper = ({ classname, children }: SelectWrapperProps) => {
-  return (
-    <div className={twMerge("flex flex-col-reverse", classname)}>
-      {children}
-    </div>
-  );
+  return <div className={twMerge("flex flex-col", classname)}>{children}</div>;
 };

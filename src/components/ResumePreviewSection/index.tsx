@@ -1,9 +1,9 @@
-
-
-
-export const ResumeSection = ({formData}) => {
+export const ResumeSection = ({ formData }) => {
   return (
-    <div className="bg-white text-black text-[1.2rem] w-[794px] max-w-[794px]" id="resume">
+    <div
+      className="bg-white text-black text-[1.2rem] w-[794px] max-w-[794px]"
+      id="resume"
+    >
       {formData && (
         <div className="flex flex-col gap-5 px-5">
           <div>

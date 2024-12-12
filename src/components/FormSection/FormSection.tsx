@@ -1,16 +1,15 @@
+import { Button } from "@/components/ui/button";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import React, { useState } from "react";
+import { FormRoot } from "../Form/FormRoot";
+import { InputRoot } from "../Inputs/InputRoot";
 import { ResumeSection } from "../ResumePreviewSection";
+import { SelectRoot } from "../Selects/SelectRoot";
+import { SelectEducationItem } from "./SelectEducationItem";
+import { EducationTypeList } from "./SelectEductionItemList";
+import { SelectionLanguageItem } from "./SelectLanguageItem";
+import { LanguageList, LevelList } from "./SelectLanguageType";
 import {
   FormDataProps,
   initialValueFormData,
@@ -18,10 +17,6 @@ import {
   TExperience,
   TLanguage,
 } from "./types";
-import { SelectEducationItem } from "./SelectEducationItem";
-import { SelectionLanguageItem } from "./SelectLanguageItem";
-import { EducationTypeList } from "./SelectEductionItemList";
-import { LanguageList, LevelList } from "./SelectLanguageType";
 
 export const FormSection = () => {
   const [formData, setFormData] = useState<FormDataProps>(initialValueFormData);
@@ -127,239 +122,400 @@ export const FormSection = () => {
   };
 
   return (
-    <section className="flex">
-      <form className="gap-2 flex flex-col py-4 px-2 h" onSubmit={handleSubmit}>
-        <Label htmlFor="fullname">Nome Completo</Label>
-        <Input
-          placeholder="Nome Completo"
-          name="fullname"
-          className="w-full max-w-[20rem]"
-          onChange={handleOnChange}
-        />
-        <Label htmlFor="position">Cargo desejado</Label>
-        <Input
-          placeholder="Cargo desejado"
-          name="position"
-          className="w-full max-w-[20rem]"
-          onChange={handleOnChange}
-        />
+    <section className="flex flex-col w-full items-center p-10 space-y-2">
+      <h1 className="text-3xl font-bold">Construtor de Currículo</h1>
+      <FormRoot.root
+        className="gap-4 w-3/4 flex flex-col border-2 rounded-md border-blue-700 bg-gradient-to-tl from-blue-900 to-blue-600 p-4"
+        onSubmit={handleSubmit}
+      >
+        <fieldset className="flex flex-col gap-5 border-2 rounded-md border-blue-900 p-4">
+          <legend className="text-2xl capitalize">Informações pessoais</legend>
 
-        <Label htmlFor="adress">Endereço</Label>
-        <Input
-          placeholder="R. Exemplo, 1 - Bairro, Cidade/Estado"
-          name="adress"
-          className="w-full max-w-[20rem]"
-          onChange={handleOnChange}
-        />
-
-        <Label htmlFor="email">E-mail</Label>
-        <Input
-          placeholder="exemplo@exemplo.com"
-          name="email"
-          className="w-full max-w-[20rem]"
-          onChange={handleOnChange}
-        />
-
-        <Label htmlFor="phonenumber">Telefone para contato</Label>
-        <Input
-          placeholder="+55(00)99999-9999"
-          name="phonenumber"
-          className="w-full max-w-[20rem]"
-          onChange={handleOnChange}
-        />
-        <Label htmlFor="links">Links</Label>
-        <Input
-          placeholder="LinkedIn"
-          name="linkedin"
-          className="w-full max-w-[20rem]"
-          onChange={handleOnChange}
-        />
-        <Input
-          placeholder="GitHub"
-          name="github"
-          className="w-full max-w-[20rem]"
-          onChange={handleOnChange}
-        />
-        <Input
-          placeholder="Portfólio"
-          name="portfolio"
-          className="w-full max-w-[20rem]"
-          onChange={handleOnChange}
-        />
-
-        <Label htmlFor="perfil">Perfil Profissional</Label>
-        <Input
-          placeholder="Perfil Profissional"
-          name="perfil"
-          className="w-full max-w-[20rem]"
-          onChange={handleOnChange}
-        />
-
-        <Label htmlFor="attributes">Tecnologias/Habilidades</Label>
-        <Input
-          placeholder="Tecnologias/Habilidades"
-          name="attributes"
-          className="w-full max-w-[20rem]"
-          onChange={handleOnChange}
-        />
-        <Label htmlFor="education">Formação</Label>
-        <Input
-          placeholder="Curso"
-          value={isEducation.course}
-          onChange={(e) =>
-            setIsEducation({ ...isEducation, course: e.target.value })
-          }
-          name="education"
-          className="w-full max-w-[20rem]"
-        />
-        <Input
-          placeholder="Instituição"
-          value={isEducation.institution}
-          onChange={(e) =>
-            setIsEducation({ ...isEducation, institution: e.target.value })
-          }
-          name="education"
-          className="w-full max-w-[20rem]"
-        />
-        <Input
-          type="date"
-          placeholder="Inicio"
-          value={isEducation.startDate}
-          name="education"
-          onChange={(e) =>
-            setIsEducation({ ...isEducation, startDate: e.target.value })
-          }
-          className="w-full max-w-[20rem]"
-        />
-        <Input
-          type="date"
-          placeholder="Fim"
-          value={isEducation.endDate}
-          onChange={(e) =>
-            setIsEducation({ ...isEducation, endDate: e.target.value })
-          }
-          name="education"
-          className="w-full max-w-[20rem]"
-        />
-        <Select
-          value={isEducation.type}
-          name="CourseType"
-          onValueChange={(event: string) =>
-            setIsEducation({ ...isEducation, type: event })
-          }
-        >
-          <SelectTrigger className="w-[20rem]">
-            <SelectValue placeholder="Tipo de formação" />
-          </SelectTrigger>
-          <SelectContent>
-            {EducationTypeList.map((item, index: number) => (
-              <SelectEducationItem
-                value={item.name}
-                key={index}
-                content={item.name}
+          <FormRoot.container className="flex-wrap w-full gap-y-4">
+            <InputRoot.root
+              wrapperClassName="max-w-[20rem] w-full"
+              labelText="Nome Completo"
+              name="fullname"
+              placeholder="Nome Completo"
+              onChange={handleOnChange}
+            />
+            <InputRoot.root
+              wrapperClassName="flex-grow"
+              labelText="Cargo Desejado"
+              name="position"
+              placeholder="Cargo Desejado"
+              onChange={handleOnChange}
+            />
+            <div className="flex w-full gap-2">
+              <InputRoot.root
+                wrapperClassName="w-1/2"
+                labelText="E-mail"
+                name="email"
+                placeholder="exemplo@exemplo.com"
+                onChange={handleOnChange}
               />
-            ))}
-          </SelectContent>
-        </Select>
-        <Button onClick={handleEducation}>Adicionar Formação</Button>
-
-        <Label htmlFor="courses">Cursos e Qualificações Complementares</Label>
-        <Input
-          placeholder="Curso"
-          name="courses"
-          className="w-full max-w-[20rem]"
-          value={course}
-          onChange={(e) => setCourse(e.target.value)}
-        />
-        <Button onClick={handleAddCourse}>Adicionar Curso</Button>
-
-        <Label htmlFor="experiencie">Experiência</Label>
-        <Input
-          placeholder="Empresa"
-          name="experience"
-          className="w-full max-w-[20rem]"
-          value={isExperience.enterprise}
-          onChange={(e) =>
-            setIsExperience({ ...isExperience, enterprise: e.target.value })
-          }
-        />
-        <Input
-          placeholder="Cargo"
-          name="experience"
-          className="w-full max-w-[20rem]"
-          value={isExperience.position}
-          onChange={(e) =>
-            setIsExperience({ ...isExperience, position: e.target.value })
-          }
-        />
-        <Input
-          type="date"
-          placeholder="start"
-          name="experience"
-          className="w-full max-w-[20rem]"
-          value={isExperience.startDate}
-          onChange={(e) =>
-            setIsExperience({ ...isExperience, startDate: e.target.value })
-          }
-        />
-        <Input
-          type="date"
-          placeholder="end"
-          name="experience"
-          className="w-full max-w-[20rem]"
-          value={isExperience.endDate}
-          onChange={(e) =>
-            setIsExperience({ ...isExperience, endDate: e.target.value })
-          }
-        />
-        <Button onClick={handleExperience}>Adicionar Experiência</Button>
-
-        <Label htmlFor="language">Idioma</Label>
-        <Select
-          name="language"
-          value={isLanguage.language}
-          onValueChange={(event: string) =>
-            setIsLanguage({ ...isLanguage, language: event })
-          }
-        >
-          <SelectTrigger className="w-[20rem]">
-            <SelectValue placeholder="Idioma" />
-          </SelectTrigger>
-          <SelectContent>
-            {LanguageList.map((item, index) => (
-              <SelectionLanguageItem
-                key={index}
-                content={item.name}
-                value={item.name}
+              <InputRoot.root
+                wrapperClassName="w-1/2"
+                labelText="Telefone para contato"
+                name="phonenumber"
+                placeholder="+55(00)99999-9999"
+                onChange={handleOnChange}
               />
-            ))}
-          </SelectContent>
-        </Select>
-        <Select
-          name="level"
-          value={isLanguage.level}
-          onValueChange={(event: string) =>
-            setIsLanguage({ ...isLanguage, level: event })
-          }
-        >
-          <SelectTrigger className="w-[20rem]">
-            <SelectValue placeholder="Nível" />
-          </SelectTrigger>
-          <SelectContent>
-            {LevelList.map((item, index) => (
-              <SelectionLanguageItem
-                key={index}
-                content={item.name}
-                value={item.name}
-              />
-            ))}
-          </SelectContent>
-        </Select>
-        <Button onClick={handleLanguage}>Adicionar Idioma</Button>
-        <Button className="w-full max-w-[20rem]" onClick={generateResume}>
-          Gerar Curriculo{" "}
-        </Button>
-      </form>
+            </div>
+          </FormRoot.container>
+
+          <FormRoot.container>
+            <InputRoot.root
+              wrapperClassName="w-full"
+              labelText="Endereço"
+              name="adress"
+              placeholder="R. Exemplo, 1 - Bairro, Cidade/Estado"
+              onChange={handleOnChange}
+            />
+          </FormRoot.container>
+
+          <FormRoot.container>
+            <InputRoot.wrapper classname="w-full gap-2">
+              <InputRoot.label className="text-lg" htmlFor="links">
+                Links
+              </InputRoot.label>
+              <div className="w-full flex gap-2">
+                <InputRoot.singleInput
+                  placeholder="LinkedIn"
+                  id="links"
+                  name="linkedin"
+                  className="w-1/3"
+                  onChange={handleOnChange}
+                />
+                <InputRoot.singleInput
+                  placeholder="Github"
+                  name="github"
+                  className="w-1/3"
+                  onChange={handleOnChange}
+                />
+                <InputRoot.singleInput
+                  placeholder="Portfolio"
+                  name="portfolio"
+                  className="w-1/3"
+                  onChange={handleOnChange}
+                />
+              </div>
+            </InputRoot.wrapper>
+          </FormRoot.container>
+
+          <FormRoot.container>
+            <InputRoot.root
+              wrapperClassName="w-1/2"
+              labelText="Perfil Profissional"
+              name="perfil"
+              placeholder="Perfil Profissional"
+              onChange={handleOnChange}
+            />
+            <InputRoot.root
+              wrapperClassName="w-1/2"
+              labelText="Tecnologias/Habilidades"
+              name="attributes"
+              placeholder="Ex: React | Next.js | NodeJS"
+              onChange={handleOnChange}
+            />
+          </FormRoot.container>
+        </fieldset>
+
+        <fieldset className="flex flex-col gap-5 border-2 rounded-md border-blue-900 p-4">
+          <legend className="text-2xl capitalize">Formação Acadêmica</legend>
+          <FormRoot.container className="flex-wrap w-full gap-y-4">
+            <div className="w-full flex gap-2">
+              <InputRoot.wrapper classname="w-1/2">
+                <InputRoot.label className="text-lg" htmlFor="education">
+                  Curso
+                </InputRoot.label>
+                <InputRoot.singleInput
+                  id="education"
+                  placeholder="Ex: Ciência de como jogar manga na lua"
+                  value={isEducation.course}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setIsEducation({ ...isEducation, course: e.target.value })
+                  }
+                  name="education"
+                  className="w-full"
+                />
+              </InputRoot.wrapper>
+              <InputRoot.wrapper classname="w-1/2">
+                <InputRoot.label className="text-lg" htmlFor="institution">
+                  Instituição
+                </InputRoot.label>
+                <InputRoot.singleInput
+                  id="institution"
+                  placeholder="Ex: Faculdade Federal de Capichaba do Norte"
+                  value={isEducation.institution}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setIsEducation({
+                      ...isEducation,
+                      institution: e.target.value,
+                    })
+                  }
+                  name="education"
+                  className="w-full"
+                />
+              </InputRoot.wrapper>
+            </div>
+            <div className="w-full flex gap-2">
+              <InputRoot.wrapper classname="w-1/3">
+                <InputRoot.label className="text-lg" htmlFor="initial_date">
+                  Data de Inicio
+                </InputRoot.label>
+                <InputRoot.singleInput
+                  id="initial_date"
+                  type="date"
+                  value={isEducation.startDate}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setIsEducation({
+                      ...isEducation,
+                      startDate: e.target.value,
+                    })
+                  }
+                  name="education"
+                  className="w-full"
+                />
+              </InputRoot.wrapper>
+              <InputRoot.wrapper classname="w-1/3">
+                <InputRoot.label className="text-lg" htmlFor="final_date">
+                  Data de Termino
+                </InputRoot.label>
+                <InputRoot.singleInput
+                  id="final_date"
+                  type="date"
+                  value={isEducation.endDate}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setIsEducation({
+                      ...isEducation,
+                      endDate: e.target.value,
+                    })
+                  }
+                  name="education"
+                  className="w-full"
+                />
+              </InputRoot.wrapper>
+              <SelectRoot.wrapper classname="w-1/3">
+                <SelectRoot.label className="text-lg">
+                  Tipo de Formação
+                </SelectRoot.label>
+                <SelectRoot.root
+                  value={isEducation.type}
+                  name="CourseType"
+                  onValueChange={(event: string) =>
+                    setIsEducation({ ...isEducation, type: event })
+                  }
+                >
+                  <SelectRoot.trigger placeholder="Tipo de Formação" />
+                  <SelectRoot.content className="bg-blue-600 border-blue-700 text-white">
+                    {EducationTypeList.map((item, index: number) => (
+                      <SelectEducationItem
+                        value={item.name}
+                        key={index}
+                        content={item.name}
+                        className="focus:bg-blue-800 focus:text-white"
+                      />
+                    ))}
+                  </SelectRoot.content>
+                </SelectRoot.root>
+              </SelectRoot.wrapper>
+            </div>
+            <div className="flex w-full justify-center pt-2">
+              <Button
+                className="w-fit p-6 text-lg bg-violet-600 hover:bg-violet-700 hover:scale-105 transition-all 0.2s ease-in-out"
+                onClick={handleEducation}
+              >
+                Adicionar Formação
+              </Button>
+            </div>
+          </FormRoot.container>
+        </fieldset>
+
+        <fieldset className="flex flex-col gap-5 border-2 rounded-md border-blue-900 p-4">
+          <legend className="text-2xl capitalize">
+            Formações Complementares
+          </legend>
+
+          <FormRoot.container className="flex-col gap-y-4">
+            <InputRoot.root
+              wrapperClassName="w-1/2"
+              labelText="Cursos e Qualificações Complementares"
+              name="courses"
+              placeholder="Curso"
+              value={course}
+              onChange={(e) => setCourse(e.target.value)}
+            />
+            <div className="flex w-full justify-center pt-2">
+              <Button
+                className="w-fit p-6 text-lg bg-violet-600 hover:bg-violet-700 hover:scale-105 transition-all 0.2s ease-in-out"
+                onClick={handleAddCourse}
+              >
+                Adicionar Curso
+              </Button>
+            </div>
+          </FormRoot.container>
+        </fieldset>
+
+        <fieldset className="flex flex-col gap-5 border-2 rounded-md border-blue-900 p-4">
+          <legend className="text-2xl capitalize">Experiencias</legend>
+
+          <FormRoot.container className="flex-col">
+            <div className="flex w-full gap-2">
+              <InputRoot.wrapper classname="w-1/2">
+                <InputRoot.label className="text-lg" htmlFor="enterprise">
+                  Empresa
+                </InputRoot.label>
+                <InputRoot.singleInput
+                  id="enterprise"
+                  value={isExperience.enterprise}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setIsExperience({
+                      ...isExperience,
+                      enterprise: e.target.value,
+                    })
+                  }
+                  name="experience"
+                  className="w-full"
+                />
+              </InputRoot.wrapper>
+              <InputRoot.wrapper classname="w-1/2">
+                <InputRoot.label className="text-lg" htmlFor="position">
+                  Cargo
+                </InputRoot.label>
+                <InputRoot.singleInput
+                  id="position"
+                  value={isExperience.position}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setIsExperience({
+                      ...isExperience,
+                      position: e.target.value,
+                    })
+                  }
+                  name="experience"
+                  className="w-full"
+                />
+              </InputRoot.wrapper>
+            </div>
+            <div className="flex w-full gap-2">
+              <InputRoot.wrapper classname="w-1/2">
+                <InputRoot.label className="text-lg" htmlFor="startDate1">
+                  Data de Inicio
+                </InputRoot.label>
+                <InputRoot.singleInput
+                  id="startDate"
+                  type="date"
+                  value={isExperience.startDate}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setIsExperience({
+                      ...isExperience,
+                      startDate: e.target.value,
+                    })
+                  }
+                  name="experience"
+                  className="w-full"
+                />
+              </InputRoot.wrapper>
+              <InputRoot.wrapper classname="w-1/2">
+                <InputRoot.label className="text-lg" htmlFor="endDate">
+                  Data de Termino
+                </InputRoot.label>
+                <InputRoot.singleInput
+                  id="endDate"
+                  type="date"
+                  value={isExperience.endDate}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setIsExperience({
+                      ...isExperience,
+                      endDate: e.target.value,
+                    })
+                  }
+                  name="experience"
+                  className="w-full"
+                />
+              </InputRoot.wrapper>
+            </div>
+            <div className="flex w-full justify-center pt-2">
+              <Button
+                className="w-fit p-6 text-lg bg-violet-600 hover:bg-violet-700 hover:scale-105 transition-all 0.2s ease-in-out"
+                onClick={handleExperience}
+              >
+                Adicionar Experiencia
+              </Button>
+            </div>
+          </FormRoot.container>
+        </fieldset>
+
+        <fieldset className="flex flex-col gap-5 border-2 rounded-md border-blue-900 p-4">
+          <legend className="text-2xl capitalize">Idiomas</legend>
+
+          <FormRoot.container className="flex-col">
+            <div className="flex w-full gap-2">
+              <SelectRoot.wrapper classname="w-full">
+                <SelectRoot.label className="text-lg"> Idioma</SelectRoot.label>
+                <SelectRoot.root
+                  name="language"
+                  value={isLanguage.language}
+                  onValueChange={(event: string) =>
+                    setIsLanguage({ ...isLanguage, language: event })
+                  }
+                >
+                  <SelectRoot.trigger placeholder="Idioma" className="w-full" />
+                  <SelectRoot.content className="bg-blue-600 border-blue-700 text-white">
+                    {LanguageList.map((item, index) => (
+                      <SelectionLanguageItem
+                        key={index}
+                        content={item.name}
+                        value={item.name}
+                      />
+                    ))}
+                  </SelectRoot.content>
+                </SelectRoot.root>
+              </SelectRoot.wrapper>
+              <SelectRoot.wrapper classname="w-full">
+                <SelectRoot.label className="text-lg">Nível</SelectRoot.label>
+                <SelectRoot.root
+                  name="level"
+                  value={isLanguage.level}
+                  onValueChange={(event: string) =>
+                    setIsLanguage({ ...isLanguage, level: event })
+                  }
+                >
+                  <SelectRoot.trigger placeholder="Nível" className="w-full" />
+                  <SelectRoot.content className="bg-blue-600 border-blue-700 text-white">
+                    {LevelList.map((item, index) => (
+                      <SelectionLanguageItem
+                        key={index}
+                        content={item.name}
+                        value={item.name}
+                      />
+                    ))}
+                  </SelectRoot.content>
+                </SelectRoot.root>
+              </SelectRoot.wrapper>
+            </div>
+            <div className="flex w-full justify-center pt-2">
+              <Button
+                className="w-fit p-6 text-lg bg-violet-600 hover:bg-violet-700 hover:scale-105 transition-all 0.2s ease-in-out"
+                onClick={handleLanguage}
+              >
+                Adicionar Idioma
+              </Button>
+            </div>
+          </FormRoot.container>
+        </fieldset>
+        <FormRoot.container className="justify-center items-center w-full">
+          <Button
+            className="p-10 text-2xl bg-emerald-500 hover:bg-emerald-600 hover:scale-105 transition-all 0.2s ease-in-out"
+            onClick={generateResume}
+          >
+            Gerar Curriculo{" "}
+          </Button>
+          <Button className="p-10 text-2xl bg-blue-500 hover:bg-blue-600 hover:scale-105 transition-all 0.2s ease-in-out">
+            Visualizar Preview{" "}
+          </Button>
+        </FormRoot.container>
+      </FormRoot.root>
       <ResumeSection formData={formData} />
     </section>
   );

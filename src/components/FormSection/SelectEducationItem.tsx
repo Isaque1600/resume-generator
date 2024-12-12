@@ -1,12 +1,9 @@
-import {
-  SelectItem
-} from "@/components/ui/select";
+import { SelectItem } from "@/components/ui/select";
 
 type SelectionEducationProps = {
-  value: string;
   content: string;
-};
+} & React.ComponentProps<typeof SelectItem>;
 
 export const SelectEducationItem = (props: SelectionEducationProps) => {
-  return <SelectItem value={props.value}>{props.content}</SelectItem>;
+  return <SelectItem {...props}>{props.content}</SelectItem>;
 };

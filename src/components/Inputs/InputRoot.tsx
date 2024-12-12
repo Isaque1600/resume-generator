@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
-import { InputElement } from "./InputElement";
-import { InputLabel } from "./InputLabel";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { InputWrapper } from "./InputWrapper";
 
 type InputRootProps = {
@@ -11,6 +11,7 @@ type InputRootProps = {
   inputClassName?: string;
   labelClassName?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  value?: string;
 };
 
 export const InputRoot = {
@@ -18,24 +19,27 @@ export const InputRoot = {
     labelText,
     placeholder,
     name,
+    value,
     wrapperClassName,
     inputClassName,
     labelClassName,
     onChange,
   }: InputRootProps) => (
     <InputWrapper classname={wrapperClassName}>
-      <InputLabel className={labelClassName} htmlFor={name}>
+      <Label className={twMerge("text-lg", labelClassName)} htmlFor={name}>
         {labelText}
-      </InputLabel>
-      <InputElement
+      </Label>
+      <Input
         placeholder={placeholder}
+        id={name}
+        value={value}
         name={name}
-        className={twMerge("w-full max-w-[20rem]", inputClassName)}
+        className={twMerge("w-full", inputClassName)}
         onChange={onChange}
       />
     </InputWrapper>
   ),
   wrapper: InputWrapper,
-  label: InputLabel,
-  singleInput: InputElement,
+  label: Label,
+  singleInput: Input,
 };
